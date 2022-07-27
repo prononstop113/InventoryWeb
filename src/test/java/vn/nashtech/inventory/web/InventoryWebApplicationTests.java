@@ -1,10 +1,10 @@
-package vn.nashtech.inventory.inventoryweb;
+package vn.nashtech.inventory.web;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class InventorywebApplicationTests {
+class InventoryWebApplicationTests {
 
 	@Test
 	void contextLoads() {

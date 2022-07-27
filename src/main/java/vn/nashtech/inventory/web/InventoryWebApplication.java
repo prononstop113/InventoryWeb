@@ -1,13 +1,13 @@
-package vn.nashtech.inventory.inventoryweb;
+package vn.nashtech.inventory.web;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class InventorywebApplication {
+public class InventoryWebApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(InventorywebApplication.class, args);
+		SpringApplication.run(InventoryWebApplication.class, args);
 	}
 
 }

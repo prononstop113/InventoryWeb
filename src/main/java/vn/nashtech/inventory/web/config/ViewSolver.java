@@ -1,4 +1,4 @@
-package vn.nashtech.inventory.inventoryweb.config;
+package vn.nashtech.inventory.web.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
