@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 
 <head>
 
@@ -25,6 +26,12 @@
 <body class="bg-gradient-primary">
 
 <div class="container">
+    <c:if test="${param.error == 'true'}">
+        <script type="text/javascript">
+            var msg = "Username is exist !!";
+            alert(msg);
+        </script>
+    </c:if>
 
     <div class="card o-hidden border-0 shadow-lg my-5">
         <div class="card-body p-0">
@@ -36,46 +43,48 @@
                         <div class="text-center">
                             <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                         </div>
-                        <form action="/signup" class="user">
+                        <form action="/signup" class="user" method ="POST">
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input type="text" class="form-control form-control-user" id="exampleFirstName"
+                                    <input type="text" class="form-control form-control-user"
+                                           name="username" placeholder="Username">
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="password" class="form-control form-control-user"
+                                           name="password" placeholder="Password">
+
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <input type="text" class="form-control form-control-user" name="firstName"
                                            placeholder="First Name">
                                 </div>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control form-control-user" id="exampleLastName"
+                                    <input type="text" class="form-control form-control-user" name="lastName"
                                            placeholder="Last Name">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <input type="email" class="form-control form-control-user" id="exampleInputEmail"
+                                <input type="email" class="form-control form-control-user" name="email"
                                        placeholder="Email Address">
                             </div>
-                            <div class="form-group row">
-                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input type="password" class="form-control form-control-user"
-                                           id="exampleInputPassword" placeholder="Password">
-                                </div>
-                                <div class="col-sm-6">
-                                    <input type="password" class="form-control form-control-user"
-                                           id="exampleRepeatPassword" placeholder="Repeat Password">
-                                </div>
-                            </div>
+
                             <button type="submit" class="btn btn-primary btn-user btn-block"    >
                                 Register Account
                             </button>
-<%--                            <hr>--%>
-<%--                            <a href="index.html" class="btn btn-google btn-user btn-block">--%>
-<%--                                <i class="fab fa-google fa-fw"></i> Register with Google--%>
-<%--                            </a>--%>
-<%--                            <a href="index.html" class="btn btn-facebook btn-user btn-block">--%>
-<%--                                <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook--%>
-<%--                            </a>--%>
+                            <%--                            <hr>--%>
+                            <%--                            <a href="index.html" class="btn btn-google btn-user btn-block">--%>
+                            <%--                                <i class="fab fa-google fa-fw"></i> Register with Google--%>
+                            <%--                            </a>--%>
+                            <%--                            <a href="index.html" class="btn btn-facebook btn-user btn-block">--%>
+                            <%--                                <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook--%>
+                            <%--                            </a>--%>
                         </form>
                         <hr>
-<%--                        <div class="text-center">--%>
-<%--                            <a class="small" href="forgot-password.html">Forgot Password?</a>--%>
-<%--                        </div>--%>
+                        <%--                        <div class="text-center">--%>
+                        <%--                            <a class="small" href="forgot-password.html">Forgot Password?</a>--%>
+                        <%--                        </div>--%>
                         <div class="text-center">
                             <a class="small" href="signin">Already have an account? Login!</a>
                         </div>
