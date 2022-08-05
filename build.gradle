@@ -19,7 +19,6 @@ repositories {
 }
 
 dependencies {
-//	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
 	//import jsp jstl
@@ -27,8 +26,8 @@ dependencies {
 	//import spring security
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.security:spring-security-test'
-
-
+	implementation group: 'org.springframework.security', name: 'spring-security-taglibs', version: '5.7.2'
+	implementation group: 'org.springframework', name: 'spring-core', version: '5.3.19'
 	implementation group: 'javax.servlet', name: 'jstl' , version: '1.2'
 	implementation group: 'org.apache.tiles', name: 'tiles-jsp', version: '3.0.5'
 	compileOnly 'org.projectlombok:lombok'
@@ -41,3 +40,4 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+ext['spring.version'] = '4.2.1.RELEASE'

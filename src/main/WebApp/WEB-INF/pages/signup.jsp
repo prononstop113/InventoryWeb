@@ -28,7 +28,7 @@
 <div class="container">
     <c:if test="${param.error == 'true'}">
         <script type="text/javascript">
-            var msg = "Username is exist !!";
+            var msg = ${messagelog};
             alert(msg);
         </script>
     </c:if>

@@ -25,5 +25,14 @@
         <put-attribute name="title" value="Test Page" />
         <put-attribute name="body" value="/WEB-INF/pages/test.jsp" />
     </definition>
+    <definition name="listuser" extends="base.definition">
+        <put-attribute name="title" value="List User Page" />
+        <put-attribute name="body" value="/WEB-INF/pages/listuser.jsp" />
+    </definition>
+
+    <definition name="profile" extends="base.definition">
+        <put-attribute name="title" value="Profile" />
+        <put-attribute name="body" value="/WEB-INF/pages/profile.jsp" />
+    </definition>
 
 </tiles-definitions>
