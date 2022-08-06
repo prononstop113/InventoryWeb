@@ -20,7 +20,7 @@
                 </span>
             </div>
         </div>
-        <form class="col-md-8 " method = "post" id="edituser">
+        <form class="col-md-8 " method = "PUT" id="edituser">
             <div class="p-3 py-5">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h4 class="text-right">Profile Settings</h4>
@@ -62,9 +62,6 @@
 </div>
 </div>
 <script type='text/javascript' src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js'></script>
-<script type='text/javascript' src='#'></script>
-<script type='text/javascript' src='#'></script>
-<script type='text/javascript' src='#'></script>
-<script type='text/javascript' src='#'></script>
+
 </body>
 </html>"

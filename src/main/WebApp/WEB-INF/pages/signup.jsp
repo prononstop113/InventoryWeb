@@ -24,6 +24,7 @@
 </head>
 
 <body class="bg-gradient-primary">
+${messagelog}
 
 <div class="container">
     <c:if test="${param.error == 'true'}">

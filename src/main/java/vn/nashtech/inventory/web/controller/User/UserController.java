@@ -25,7 +25,6 @@ public class UserController {
             return "redirect:/signin";
         } else
             message= isOK(form);
-
             model.addAttribute("messagelog",message);
             return "redirect:/signup?error=true";
     }
