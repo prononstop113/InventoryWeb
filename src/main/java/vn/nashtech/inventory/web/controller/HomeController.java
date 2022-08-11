@@ -1,25 +1,23 @@
 package vn.nashtech.inventory.web.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
-import vn.nashtech.inventory.web.model.User;
-
-import java.util.List;
+import vn.nashtech.inventory.web.controller.User.UserController;
 
 @Controller
+@Component
 public class HomeController {
-    ObjectMapper obj= new ObjectMapper();
-    RestTemplate rest = new RestTemplate();
-    ResponseEntity<?> response;
+private final UserController userController;
+@Autowired
+    public HomeController(UserController userController) {
+        this.userController = userController;
+    }
+
     @GetMapping(value= { "/", "/index" })
     public String index(Model model) {
-
         return "homePage";
     }
     @GetMapping ("/test")
@@ -31,8 +29,6 @@ public class HomeController {
 
       return  "signin";
     }
-
-
     @GetMapping ("/signup")
     public String register (Model model){
         return  "signup";
@@ -46,16 +42,13 @@ public class HomeController {
         return  "profile";
     }
     @GetMapping ("/listuser")
-    public String listuser (Model model) throws JsonProcessingException {
-        String rs;
-        rs= rest.getForObject("http://localhost:8090/user/listUser", String.class);
-        List<User> listUser = obj.readValue(rs, new TypeReference<List<User>>() {
-            @Override public int compareTo(TypeReference<List<User>> o) {
-                return super.compareTo(o);
-            }
-        });
-        model.addAttribute("listofuser",listUser);
+    public String listuser (Model model)  {
+        model.addAttribute("listofuser",userController.listUser());
         return  "listuser";
     }
-
+    @GetMapping ("/product")
+    public String product (Model model)  {
+        model.addAttribute("listofuser",userController.listUser());
+        return  "product";
+    }
 }
