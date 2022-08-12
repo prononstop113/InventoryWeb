@@ -6,13 +6,15 @@
 <body>
 <div class="container-fluid">
     <div>
-        <button id ="btnAddGood" class="btn btn-outline-success" type="button" data-toggle="collapse" data-target="#collapseForm" aria-expanded="false" aria-controls="collapseForm">
+        <button id ="btnOpenForm" class="btn btn-outline-success" type="button"
+                data-toggle="collapse" data-target="#collapseForm" aria-expanded="false" aria-controls="collapseForm"
+                onclick="openForm()">
             Add new Product
         </button>
     </div>
 
     <div class="collapse py-sm-1" id="collapseForm">
-    <form>
+    <form id = "formGood">
         <div class="form-row">
             <div class="form-group col-md-4">
                 <label for="inputProductName">Product Name</label>
@@ -34,14 +36,15 @@
 
             </div>
         </div>
-        <button type="submit" class="btn btn-sm btn-success">Submit</button>
+        <button type="submit" class="btn btn-sm btn-success" onclick="addNewGood()">Submit</button>
+        <button type="button" class="btn btn-sm btn-secondary"  data-toggle="collapse" data-target="#collapseForm" aria-expanded="false" aria-controls="collapseForm" onclick="closeForm()">Close</button>
     </form>
     </div>
     <h1 class="h3 mb-0 text-gray-800 py-sm-2">
         List of product
     </h1>
-    <div class="table-responsive-sm" style="height: 380px;overflow: scroll;">
-        <table class="table table-bordered table-striped mb-0">
+    <div id ="customTB"class="table-responsive-sm" style="height: 600px;overflow: scroll;">
+        <table id = "tableRS" class="table table-bordered table-striped mb-0">
             <thead class="thead-dark">
             <tr>
                 <th scope="col">ID</th>
@@ -54,21 +57,23 @@
             </thead>
             <tbody>
             <c:choose>
-                <c:when test="${not empty listofuser}">
-                    <c:forEach items="${listofuser}" var="lists">
+                <c:when test="${not empty listofGood}">
+                    <c:forEach items="${listofGood}" var="lists">
                         <tr>
                             <th scope="row"> ${lists.id} </th>
-                            <td>        ${lists.username}</td>
-                            <td>        ${lists.firstName}</td>
-                            <td>        ${lists.lastName}</td>
-                            <td>        ${lists.email}</td>
-                            <td><button id="btnUpdate" type="submit" class="btn btn-sm btn-warning">Update</button>
-                                <button id="btnDelete" type="submit" class="btn btn-sm btn-danger">Delete</button></td>
+                            <td>        ${lists.productCode}</td>
+                            <td>        ${lists.productName}</td>
+                            <td>        ${lists.productDescription}</td>
+                            <td>        ${lists.unitId}</td>
+                            <td><button id="btnUpdate" type="submit" class="btn btn-sm btn-warning"
+                                        data-toggle="collapse" data-target="#collapseForm" aria-expanded="false" aria-controls="collapseForm"
+                                        onclick="updateInfo(this)">Update</button>
+                                <button id="btnDelete" type="submit" class="btn btn-sm btn-danger" onclick="deleteInfo(this)">Delete</button></td>
                         </tr>
                     </c:forEach>
                 </c:when>
                 <c:otherwise>
-                    No data in table
+                    <h6> No data in table</h6>
                     <br />
                 </c:otherwise>
             </c:choose>
@@ -76,6 +81,54 @@
         </table>
     </div>
 </div>
+<script  type='text/javascript'>
+    var isEdit =false;
+    function  openForm(){
+        document.getElementById("btnOpenForm").disabled=true;
+    document.getElementById("customTB").style.height = "380px";
+    }
+    function closeForm(){
+        document.getElementById("btnUpdate").disabled=false;
+        document.getElementById("btnOpenForm").disabled=false;
+        document.getElementById("customTB").style.height = "600px";
+    }
+    function deleteInfo(){
 
+    }
+
+
+    function updateInfo(){
+        openForm();
+        document.getElementById("btnUpdate").disabled=true;
+        var productCode=document.getElementById("username");
+        var productName=document.getElementById("firstname");
+        var productDescription=document.getElementById("lastname");
+        var unitID = document.getElementById("email")
+        document.getElementById("inputProductCode").value=productCode;
+        document.getElementById("inputProductName").value=productName;
+        document.getElementById("inputProductDescription").value=productDescription;
+        document.getElementById("inputUnitID").value=unitID;
+        isEdit=true;
+    }
+    function addNewGood(){
+        if(isEdit){
+
+        }
+        else{
+
+        }
+    }
+
+</script>
+<script>
+    $(document).ready(function(){
+        $(".btn-success").click(function(){
+
+        });
+        $(".btn-warning").click(function(){
+            $(".collapse").collapse('hide');
+        });
+    });
+</script>
 </body>
 </html>

@@ -5,15 +5,18 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import vn.nashtech.inventory.web.controller.Good.GoodController;
 import vn.nashtech.inventory.web.controller.User.UserController;
 
 @Controller
 @Component
 public class HomeController {
 private final UserController userController;
+private final GoodController goodController;
 @Autowired
-    public HomeController(UserController userController) {
+    public HomeController(UserController userController,GoodController goodController) {
         this.userController = userController;
+    this.goodController = goodController;
     }
 
     @GetMapping(value= { "/", "/index" })
@@ -48,7 +51,7 @@ private final UserController userController;
     }
     @GetMapping ("/product")
     public String product (Model model)  {
-        model.addAttribute("listofuser",userController.listUser());
+        model.addAttribute("listofGood",goodController.listGood());
         return  "product";
     }
 }

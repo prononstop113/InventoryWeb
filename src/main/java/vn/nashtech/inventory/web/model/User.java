@@ -4,7 +4,6 @@ import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.io.Serializable;
 import java.util.Collection;
 @Data
 public class User implements UserDetails {
@@ -59,10 +58,6 @@ public class User implements UserDetails {
         return username;
     }
 
-//    public String getUserName() {
-//        return userName;
-//    }
-
     @Override public boolean isAccountNonExpired() {
         return true;
     }
@@ -83,12 +78,4 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    //    private String fullName;
-//    private String email;
-//    private String phoneNumber;
-//    private int avatar;
-//    private String role;
-//    private String createdDate;
-//    private String modifiedDate;
-//    private String lastUsed;
 }
