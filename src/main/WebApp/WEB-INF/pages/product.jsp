@@ -7,37 +7,41 @@
 <div class="container-fluid">
     <div>
         <button id ="btnOpenForm" class="btn btn-outline-success" type="button"
-                data-toggle="collapse" data-target="#collapseForm" aria-expanded="false" aria-controls="collapseForm"
                 onclick="openForm()">
             Add new Product
         </button>
     </div>
 
     <div class="collapse py-sm-1" id="collapseForm">
-    <form id = "formGood">
+    <form id = "formGood" method="post" action="/good">
         <div class="form-row">
             <div class="form-group col-md-4">
                 <label for="inputProductName">Product Name</label>
-                <input type="text" class="form-control" id="inputProductCode" placeholder="Enter Product Code">
+                <input type="text" class="form-control" id="inputProductCode" name="productCode" placeholder="Enter Product Code">
             </div>
             <div class="form-group col-md-4">
                 <label for="inputProductCode">Product Code</label>
-                <input type="text" class="form-control" id="inputProductName" placeholder="Enter Product Name">
+                <input type="text" class="form-control" id="inputProductName" name="productName"  placeholder="Enter Product Name">
             </div>
         </div>
         <div class="form-group">
             <label for="inputProductDescription">Description</label>
-            <input type="text" class="form-control" id="inputProductDescription" placeholder="Enter Product Description">
+            <input type="text" class="form-control" id="inputProductDescription"  name="productDescription" placeholder="Enter Product Description">
         </div>
-        <label for="inputUnitID">Unit ID</label>
         <div class="form-row">
             <div class="form-group col-md-4">
-                <input type="text" class="form-control" id="inputUnitID" placeholder="Enter Unit ID">
+                <label for="inputUnitID">Unit ID</label>
+                <input type="text" class="form-control" id="inputUnitID" name="unitID" placeholder="Enter Unit ID">
+            </div>
+
+            <div class="form-group col-md-4">
+                <label for="productIDout">Product ID</label>
+                <input type="text" class="form-control" id="productIDout" name="id" readonly>
 
             </div>
         </div>
-        <button type="submit" class="btn btn-sm btn-success" onclick="addNewGood()">Submit</button>
-        <button type="button" class="btn btn-sm btn-secondary"  data-toggle="collapse" data-target="#collapseForm" aria-expanded="false" aria-controls="collapseForm" onclick="closeForm()">Close</button>
+        <button type="button" class="btn btn-sm btn-success" onclick="addNewGood()">Submit</button>
+        <button type="button" class="btn btn-sm btn-secondary"  onclick="closeForm()">Close</button>
     </form>
     </div>
     <h1 class="h3 mb-0 text-gray-800 py-sm-2">
@@ -58,6 +62,7 @@
             <tbody>
             <c:choose>
                 <c:when test="${not empty listofGood}">
+
                     <c:forEach items="${listofGood}" var="lists">
                         <tr>
                             <th scope="row"> ${lists.id} </th>
@@ -66,7 +71,6 @@
                             <td>        ${lists.productDescription}</td>
                             <td>        ${lists.unitId}</td>
                             <td><button id="btnUpdate" type="submit" class="btn btn-sm btn-warning"
-                                        data-toggle="collapse" data-target="#collapseForm" aria-expanded="false" aria-controls="collapseForm"
                                         onclick="updateInfo(this)">Update</button>
                                 <button id="btnDelete" type="submit" class="btn btn-sm btn-danger" onclick="deleteInfo(this)">Delete</button></td>
                         </tr>
@@ -82,53 +86,82 @@
     </div>
 </div>
 <script  type='text/javascript'>
+    import axios from "axios";
     var isEdit =false;
+    var isExpanded = false;
+    var tableRS = document.getElementById("tableRS");
     function  openForm(){
+        isExpanded=true;
+        $("#collapseForm").collapse('show');
         document.getElementById("btnOpenForm").disabled=true;
-    document.getElementById("customTB").style.height = "380px";
+    document.getElementById("customTB").style.height = "350px";
     }
     function closeForm(){
+        $("#collapseForm").collapse('hide');
+        isExpanded= false;
         document.getElementById("btnUpdate").disabled=false;
         document.getElementById("btnOpenForm").disabled=false;
         document.getElementById("customTB").style.height = "600px";
     }
-    function deleteInfo(){
+    function deleteInfo(element){
+        var rows = element.parentNode.parentNode;
+        var id =document.getElementById("productIDout").value=tableRS.rows[rows.rowIndex].cells[0].innerHTML.trim();
+        axios({
+            method: "delete",
+            url: "http://localhost:8091/good/{id}",
+            data: id,
+            headers: { "Content-Type": "multipart/form-data" },
+        })
+            .then(function (response) {
+                location.reload()
+                console.log(response);
+            })
+            .catch(function (response) {
+                location.reload()
+                console.log(response);
+            });
 
     }
-
-
-    function updateInfo(){
-        openForm();
-        document.getElementById("btnUpdate").disabled=true;
-        var productCode=document.getElementById("username");
-        var productName=document.getElementById("firstname");
-        var productDescription=document.getElementById("lastname");
-        var unitID = document.getElementById("email")
-        document.getElementById("inputProductCode").value=productCode;
-        document.getElementById("inputProductName").value=productName;
-        document.getElementById("inputProductDescription").value=productDescription;
-        document.getElementById("inputUnitID").value=unitID;
+    function updateInfo(element){
+        if(isExpanded==false){
+            openForm();
+        }
+        var rows = element.parentNode.parentNode;
+        isEdit=true;
+        document.getElementById("inputProductCode").value=tableRS.rows[rows.rowIndex].cells[2].innerHTML.trim();
+        document.getElementById("inputProductName").value=tableRS.rows[rows.rowIndex].cells[1].innerHTML.trim();
+        document.getElementById("inputProductDescription").value=tableRS.rows[rows.rowIndex].cells[3].innerHTML.trim();
+        document.getElementById("inputUnitID").value=tableRS.rows[rows.rowIndex].cells[4].innerHTML.trim();
+        document.getElementById("productIDout").value=tableRS.rows[rows.rowIndex].cells[0].innerHTML.trim();
         isEdit=true;
     }
     function addNewGood(){
         if(isEdit){
-
+            const formData = new FormData()
+            formData.append('id',document.getElementById("productIDout").value);
+            formData.append('productCode',document.getElementById("inputProductCode").value);
+            formData.append('productName',document.getElementById("inputProductName").value);
+            formData.append('productDescription',document.getElementById("inputProductDescription").value);
+            formData.append('unitID',document.getElementById("inputUnitID").value);
+            axios({
+                method: "put",
+                url: "http://localhost:8091/good/{id}",
+                data: formData,
+                headers: { "Content-Type": "multipart/form-data" },
+            })
+                .then(function (response) {
+                    location.reload()
+                    console.log(response);
+                })
+                .catch(function (response) {
+                    location.reload()
+                    console.log(response);
+                });
         }
         else{
-
+            document.getElementById("formGood").submit();
         }
     }
-
-</script>
-<script>
-    $(document).ready(function(){
-        $(".btn-success").click(function(){
-
-        });
-        $(".btn-warning").click(function(){
-            $(".collapse").collapse('hide');
-        });
-    });
 </script>
 </body>
 </html>

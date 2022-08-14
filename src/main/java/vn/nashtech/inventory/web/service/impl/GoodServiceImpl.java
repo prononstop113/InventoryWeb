@@ -1,12 +1,13 @@
 package vn.nashtech.inventory.web.service.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import vn.nashtech.inventory.web.model.Good;
+import vn.nashtech.inventory.web.model.GoodInput;
 import vn.nashtech.inventory.web.service.GoodService;
 
 
@@ -19,10 +20,14 @@ public class GoodServiceImpl implements GoodService {
     ObjectMapper objectMapper = new ObjectMapper();
 
     @Override public void editGood(Good formGood) {
-        rest.put("http://localhost:8091/good/{id}", formGood, Good.class);
+        rest.put("http://localhost:8091/good/{id}", formGood, formGood.getId());
     }
 
-    @Override public String addGood(Good formGood) {
+    @Override public void deleteGood(int id) {
+        rest.delete("http://localhost:8091/good/{id}",id);
+    }
+
+    @Override public String addGood(GoodInput formGood) {
         String msg;
         try {
             response = rest.postForEntity("http://localhost:8091/good", formGood, String.class);
@@ -34,7 +39,6 @@ public class GoodServiceImpl implements GoodService {
         }
     }
     @Override public List<Good> listGood() {
-
         List<Good> listGood;
       Good[]mlis= rest.getForObject("http://localhost:8091/good/list", Good[].class);
       listGood=Arrays.asList(mlis);
