@@ -52,7 +52,6 @@ public class UserServiceImpl implements UserService {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-
     };
     }
 

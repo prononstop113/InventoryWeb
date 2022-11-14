@@ -18,7 +18,6 @@ private final GoodController goodController;
         this.userController = userController;
     this.goodController = goodController;
     }
-
     @GetMapping(value= { "/", "/index" })
     public String index(Model model) {
         return "homePage";
@@ -29,7 +28,6 @@ private final GoodController goodController;
     }
     @GetMapping ("/signin")
     public String login (Model model){
-
       return  "signin";
     }
     @GetMapping ("/signup")

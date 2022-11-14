@@ -24,14 +24,9 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 private CustomAuthenticationProvider  customAuthenticationProvider;
     @Override
     protected void configure (HttpSecurity http)  throws Exception{
-//       Allow Boostrap
         http.authorizeRequests().antMatchers("/css/**", "/js/**", "/images/**","/vendor/**","/scss/**").permitAll();
-        //Configure Security
         http.authorizeRequests()
             .antMatchers("/signup","/signin").permitAll()
-
-//            .antMatchers("/", "/home").access("hasRole('USER')")  (for role function that will be updated in future)
-//            .antMatchers("/admin/**").hasRole("ADMIN")
             .anyRequest().authenticated()
             .and().formLogin()
             .loginPage("/signin").permitAll()
@@ -40,11 +35,6 @@ private CustomAuthenticationProvider  customAuthenticationProvider;
             .failureUrl("/signin?error=true");
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403")
             .and().csrf().disable();
-//        http.authorizeRequests().and() //
-//            .rememberMe().tokenRepository(this.persistentTokenRepository()) //
-//            .tokenValiditySeconds(1 * 24 * 60 * 60);
-
-        //Logout function
         http.logout().logoutUrl("/perform_logout")
             .logoutSuccessUrl("/signin")
             .invalidateHttpSession(true)
